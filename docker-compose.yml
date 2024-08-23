@@ -12,6 +12,8 @@ services:
             - ./:/var/www
         depends_on:
             - redis
+            - nginx
+            - db
         networks:
             - laravel
 
