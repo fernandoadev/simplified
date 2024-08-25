@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->enum('type', ['customer', 'merchant']);
             $table->string('name', 220);
-            $table->string('document', 18)->unique();
+            $table->string('document', 50)->unique();
             $table->string('email', 220)->unique();
             $table->string('password', 255);
             $table->timestamp('email_verified_at')->nullable();

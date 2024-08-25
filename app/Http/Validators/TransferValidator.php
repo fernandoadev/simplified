@@ -54,7 +54,7 @@ class TransferValidator
 
             return false;
         } catch (AuthorizeClientException $e) {
-            $this->code = 400;
+            $this->code = 401;
             $this->message = $e->getMessage();
 
             return false;

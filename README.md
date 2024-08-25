@@ -44,6 +44,12 @@ Rodar as seeders
 php artisan db:seed
 ```
 
+Rodar subir o worker das filas
+
+```sh
+php artisan queue:work
+```
+
 Para rodar o PHPCS, acesse o container do app (1) em seguida rode o comando phpcs (2), caso exista algo que possa ser fixado automaticamente rode o comando phpcbf (3)
 
 ```sh
