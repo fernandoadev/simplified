@@ -44,7 +44,7 @@ Rodar as seeders
 php artisan db:seed
 ```
 
-Rodar subir o worker das filas
+Subir o worker das filas
 
 ```sh
 php artisan queue:work

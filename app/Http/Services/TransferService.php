@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Clients\NotifyClient;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendExternalNotification;
-use App\Exceptions\UserNotAllowedToPerformTransfer;
-use App\Exceptions\UserHasNotEnoughtBalanceException;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -26,14 +24,6 @@ class TransferService
             $userFrom = User::with('wallet')->find($request->payer);
             $userInto = User::with('wallet')->find($request->payee);
 
-            if (empty(UserHelper::isCustomer($userFrom))) {
-                throw UserNotAllowedToPerformTransfer::withId($userFrom->id);
-            }
-
-            if (empty(UserHelper::hasSufficientBalance($userFrom, $request->value))) {
-                throw UserHasNotEnoughtBalanceException::withId($userFrom->id);
-            }
-
             DB::beginTransaction();
 
             $userFrom->wallet->balance = $userFrom->wallet->balance - UserHelper::floatToCents($request->value);
@@ -45,12 +35,6 @@ class TransferService
             SendExternalNotification::dispatch(new NotifyClient());
             DB::commit();
             return response()->api(200, 'Transfer has perform with success.');
-        } catch (UserNotAllowedToPerformTransfer $e) {
-            DB::rollBack();
-            return response()->api(401, $e->getMessage());
-        } catch (UserHasNotEnoughtBalanceException $e) {
-            DB::rollBack();
-            return response()->api(401, $e->getMessage());
         } catch (Throwable $e) {
             DB::rollBack();
             return response()->api(500, sprintf('An unexpected error occurred: %s', $e->getMessage()));

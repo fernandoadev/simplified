@@ -44,7 +44,7 @@ describe('Should perform trasnfer', function () {
 
 
 describe('Should NOT perform trasnfer', function () {
-    it('When payer are NOT a customer', function () {
+    it('When something bad happens', function () {
         Queue::fake();
 
         $userFrom = User::factory()->create([
@@ -65,47 +65,14 @@ describe('Should NOT perform trasnfer', function () {
 
         $request = Request::create('/transfer', 'POST', [
             'value' => 50.00,
-            'payer' => $userFrom->id,
-            'payee' => $userInto->id,
+            'payer' => '123',
+            'payee' => '1234',
         ]);
 
         $transferService->transfer($request);
 
 
         $this->assertEquals(10000, $userFrom->wallet->fresh()->balance);
-        $this->assertEquals(0, $userInto->wallet->fresh()->balance);
-        Queue::assertNotPushed(SendExternalNotification::class);
-    });
-
-    it('When payer dont have sufficient balance in wallet', function () {
-        Queue::fake();
-
-        $userFrom = User::factory()->create([
-            'type' => 'merchant'
-        ]);
-        $userInto = User::factory()->create();
-
-        $userFrom->wallet()->create([
-            'name' => 'teste',
-            'balance' => 500
-        ]);
-        $userInto->wallet()->create([
-            'name' => 'teste 2',
-            'balance' => 0
-        ]);
-
-        $transferService = new TransferService();
-
-        $request = Request::create('/transfer', 'POST', [
-            'value' => 50.00,
-            'payer' => $userFrom->id,
-            'payee' => $userInto->id,
-        ]);
-
-        $transferService->transfer($request);
-
-
-        $this->assertEquals(500, $userFrom->wallet->fresh()->balance);
         $this->assertEquals(0, $userInto->wallet->fresh()->balance);
         Queue::assertNotPushed(SendExternalNotification::class);
     });

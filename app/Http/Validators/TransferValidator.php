@@ -3,18 +3,27 @@
 namespace App\Http\Validators;
 
 use App\Models\User;
+use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
 use App\Clients\AuthorizeClient;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\AuthorizeClientException;
 use Illuminate\Validation\ValidationException;
+use App\Exceptions\UserNotAllowedToPerformTransfer;
+use App\Exceptions\UserHasNotEnoughtBalanceException;
 
 class TransferValidator
 {
     private int $code;
     private string $message;
     private ?array $data = null;
+    private AuthorizeClient $authorizeClient;
+
+    public function __construct(AuthorizeClient $authorizeClient)
+    {
+        $this->authorizeClient = $authorizeClient;
+    }
 
     /**
      * @param Request $request
@@ -34,14 +43,24 @@ class TransferValidator
                 'payee' => 'required'
             ]);
 
-            (new AuthorizeClient())->getAuthorize();
+            $this->authorizeClient->getAuthorize();
 
-            if (empty(User::find($request->payer))) {
+            $userFrom = User::with('wallet')->find($request->payer);
+
+            if (empty($userFrom)) {
                 throw UserNotFoundException::withId($request->payer);
             }
 
             if (empty(User::find($request->payee))) {
                 throw UserNotFoundException::withId($request->payee);
+            }
+
+            if (empty(UserHelper::isCustomer($userFrom))) {
+                throw UserNotAllowedToPerformTransfer::withId($userFrom->id);
+            }
+
+            if (empty(UserHelper::hasSufficientBalance($userFrom, $request->value))) {
+                throw UserHasNotEnoughtBalanceException::withId($userFrom->id);
             }
 
             return true;
@@ -60,6 +79,16 @@ class TransferValidator
             return false;
         } catch (UserNotFoundException $e) {
             $this->code = 404;
+            $this->message = $e->getMessage();
+
+            return false;
+        } catch (UserNotAllowedToPerformTransfer $e) {
+            $this->code = 401;
+            $this->message = $e->getMessage();
+
+            return false;
+        } catch (UserHasNotEnoughtBalanceException $e) {
+            $this->code = 401;
             $this->message = $e->getMessage();
 
             return false;

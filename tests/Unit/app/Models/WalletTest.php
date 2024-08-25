@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use App\Models\Wallet;
-use App\Exceptions\UserAlreadyHasWalletException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 uses(DatabaseMigrations::class);
