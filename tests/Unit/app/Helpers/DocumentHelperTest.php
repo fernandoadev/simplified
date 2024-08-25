@@ -28,7 +28,7 @@ describe('Create valid document', function () use ($validCpfValuesWithoutMask, $
 
     it('Valid CNPJ with special char document', function () use ($validCnpjValuesWithoutMask) {
         foreach ($validCnpjValuesWithoutMask as $cnpj) {
-            $documentWithMask = DocumentHelper::CnpjWithMask($cnpj);
+            $documentWithMask = DocumentHelper::cnpjWithMask($cnpj);
             $document = DocumentHelper::fromString($documentWithMask);
             expect($document)->toBeInstanceOf(DocumentHelper::class);
         }

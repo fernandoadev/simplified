@@ -17,7 +17,7 @@ class TransferService
 {
     /**
      * Performs the transfer
-     * 
+     *
      * @param Request $request
      */
     public function transfer(Request $request): JsonResponse
@@ -25,11 +25,11 @@ class TransferService
         try {
             $userFrom = User::with('wallet')->find($request->payer);
             $userInto = User::with('wallet')->find($request->payee);
-           
+
             if (empty(UserHelper::isCustomer($userFrom))) {
                 throw UserNotAllowedToPerformTransfer::withId($userFrom->id);
             }
-            
+
             if (empty(UserHelper::hasSufficientBalance($userFrom, $request->value))) {
                 throw UserHasNotEnoughtBalanceException::withId($userFrom->id);
             }

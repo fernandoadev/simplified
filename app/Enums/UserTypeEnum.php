@@ -2,7 +2,6 @@
 
 namespace App\Enums;
 
-
 class UserTypeEnum
 {
     public const CUSTOMER = 'customer';

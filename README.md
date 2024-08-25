@@ -44,6 +44,14 @@ Rodar as seeders
 php artisan db:seed
 ```
 
+Para rodar o PHPCS, acesse o container do app (1) em seguida rode o comando phpcs (2), caso exista algo que possa ser fixado automaticamente rode o comando phpcbf (3)
+
+```sh
+1 - docker-compose exec app bash
+2 - vendor/bin/phpcs -s --standard=PSR12 app
+3 - vendor/bin/phpcbf --standard=PSR12 app
+```
+
 Para rodar os testes, acesse o container do app (1) em seguida rode o comando do pest (2)
 
 ```sh

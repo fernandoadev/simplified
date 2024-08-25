@@ -4,12 +4,11 @@ namespace App\Exceptions;
 
 use RuntimeException;
 
-
 class UserNotAllowedToPerformTransfer extends RuntimeException
 {
     /**
      * @param string $id
-     * 
+     *
      * @return UserNotAllowedToPerformTransfer
      */
     public static function withId(string $id): self

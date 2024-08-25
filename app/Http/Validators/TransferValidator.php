@@ -18,9 +18,9 @@ class TransferValidator
 
     /**
      * @param Request $request
-     * 
+     *
      * @return bool
-     * 
+     *
      * @throws ValidationException
      * @throws AuthorizeClientException
      * @throws UserNotFoundException

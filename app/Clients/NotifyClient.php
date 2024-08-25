@@ -18,7 +18,7 @@ class NotifyClient
 
     /**
      * @return void
-     * 
+     *
      * @throws NotifyClientException
      */
     public function notify(): void
@@ -37,9 +37,9 @@ class NotifyClient
      * @param string $url
      * @param array $data The data to be sent in the request body (optional).
      * @param array $headers Additional headers for the request (optional).
-     * 
+     *
      * @return Response
-     * 
+     *
      * @throws NotifyClientException
      */
     private function makeRequest(string $method, string $url, array $data = [], array $headers = []): Response

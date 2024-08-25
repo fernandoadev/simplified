@@ -9,7 +9,7 @@ class NotifyClientException extends RuntimeException
 {
     /**
      * @param Throwable $error
-     * 
+     *
      * @return NotifyClientException
      */
     public static function fromRequest(Throwable $error): self

@@ -18,9 +18,9 @@ class DocumentHelper
 
     /**
      * @param string $document
-     * 
+     *
      * @return DocumentHelper
-     * 
+     *
      * @throws InvalidDocumentException
      */
     public static function fromString(string $document): self
@@ -42,12 +42,12 @@ class DocumentHelper
 
     /**
      * @param string $cnpj
-     * 
+     *
      * @return string
-     * 
+     *
      * @throws InvalidDocumentException
      */
-    public static function CnpjWithMask(string $cnpj): string
+    public static function cnpjWithMask(string $cnpj): string
     {
         $cnpj = self::onlyNumbers($cnpj);
 
@@ -64,9 +64,9 @@ class DocumentHelper
 
     /**
      * @param string $cpf
-     * 
+     *
      * @return string
-     * 
+     *
      * @throws InvalidDocumentException
      */
     public static function cpfWithMask(string $cpf): string
@@ -86,9 +86,9 @@ class DocumentHelper
 
     /**
      * @param string $document
-     * 
+     *
      * @return bool
-     * 
+     *
      * @throws InvalidDocumentException
      */
     private static function isValidDocument(string $document): bool
@@ -108,7 +108,7 @@ class DocumentHelper
 
     /**
      * @param string $str
-     * 
+     *
      * @return string
      */
     private static function onlyNumbers(string $str): string

@@ -17,13 +17,13 @@ class TransferController extends Controller
 
     /**
      * Performs the transfer
-     * 
+     *
      * @param Request $request
      */
     public function transfer(Request $request)
     {
         $validation = new TransferValidator();
-        if(empty($validation->validate($request))) {
+        if (empty($validation->validate($request))) {
             return $validation->getValidateReponse();
         }
 

@@ -4,12 +4,11 @@ namespace App\Exceptions;
 
 use RuntimeException;
 
-
 class UserAlreadyHasWalletException extends RuntimeException
 {
     /**
      * @param string $id
-     * 
+     *
      * @return UserAlreadyHasWalletException
      */
     public static function withId(string $id): self

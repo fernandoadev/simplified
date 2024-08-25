@@ -17,7 +17,7 @@ class AuthorizeClient
 
     /**
      * @return bool
-     * 
+     *
      * @throws AuthorizeClientException
      */
     public function getAuthorize(): bool
@@ -38,9 +38,9 @@ class AuthorizeClient
      * @param string $url
      * @param array $data The data to be sent in the request body (optional).
      * @param array $headers Additional headers for the request (optional).
-     * 
+     *
      * @return array
-     * 
+     *
      * @throws AuthorizeClientException
      */
     private function makeRequest(string $method, string $url, array $data = [], array $headers = []): array

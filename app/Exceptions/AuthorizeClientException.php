@@ -9,7 +9,7 @@ class AuthorizeClientException extends RuntimeException
 {
     /**
      * @param Throwable $error
-     * 
+     *
      * @return AuthorizeClientException
      */
     public static function fromRequest(Throwable $error): self

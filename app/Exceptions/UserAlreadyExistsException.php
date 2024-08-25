@@ -4,12 +4,11 @@ namespace App\Exceptions;
 
 use RuntimeException;
 
-
 class UserAlreadyExistsException extends RuntimeException
 {
     /**
      * @param string $email
-     * 
+     *
      * @return UserAlreadyExistsException
      */
     public static function withEmail(string $email): self
@@ -19,7 +18,7 @@ class UserAlreadyExistsException extends RuntimeException
 
     /**
      * @param string $document
-     * 
+     *
      * @return UserAlreadyExistsException
      */
     public static function withDocument(string $document): self

@@ -7,10 +7,9 @@ use App\Models\User;
 
 class UserHelper
 {
-
     /**
      * @param User $user
-     * 
+     *
      * @return bool
      */
     public static function isCustomer(User $user): bool
@@ -25,7 +24,7 @@ class UserHelper
     /**
      * @param User $user
      * @param float $amount
-     * 
+     *
      * @return bool
      */
     public static function hasSufficientBalance(User $user, float $value): bool
@@ -44,7 +43,7 @@ class UserHelper
 
     /**
      * @param float $value
-     * 
+     *
      * @return int
      */
     public static function floatToCents(float $value): int
@@ -54,9 +53,9 @@ class UserHelper
         return (int) $roundedValue;
     }
 
-    /** 
+    /**
      * @param int $cents
-     * 
+     *
      * @return float
      */
     public static function centsToFloat(int $cents): float

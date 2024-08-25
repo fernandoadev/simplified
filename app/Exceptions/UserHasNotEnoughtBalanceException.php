@@ -4,12 +4,11 @@ namespace App\Exceptions;
 
 use RuntimeException;
 
-
 class UserHasNotEnoughtBalanceException extends RuntimeException
 {
     /**
      * @param string $id
-     * 
+     *
      * @return UserHasNotEnoughtBalanceException
      */
     public static function withId(string $id): self

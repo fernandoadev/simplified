@@ -14,7 +14,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasUuids, SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use HasUuids;
+    use SoftDeletes;
 
     /** @var string */
     protected $table = 'users';
