@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Helpers\DocumentHelper;
+use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 
 /**
@@ -28,6 +27,7 @@ class UserFactory extends Factory
         $faker = Faker::create('pt_BR');
 
         return [
+            'type' => 'customer',
             'name' => fake()->name(),
             'document' => $faker->cpf(false),
             'email' => fake()->unique()->safeEmail(),

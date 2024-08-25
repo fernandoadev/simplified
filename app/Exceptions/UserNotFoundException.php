@@ -3,10 +3,9 @@
 namespace App\Exceptions;
 
 use RuntimeException;
-use App\Exceptions\ExceptionsInterface;
 
 
-class UserNotFoundException extends RuntimeException implements ExceptionsInterface
+class UserNotFoundException extends RuntimeException
 {
     /**
      * @param string $id
@@ -15,14 +14,6 @@ class UserNotFoundException extends RuntimeException implements ExceptionsInterf
      */
     public static function withId(string $id): self
     {
-        return new self(sprintf('Role not found with id: %s', $id));
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return 'User not found.';
+        return new self(sprintf('User not found with id: %s', $id));
     }
 }

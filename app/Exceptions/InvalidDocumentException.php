@@ -3,10 +3,9 @@
 namespace App\Exceptions;
 
 use RuntimeException;
-use App\Exceptions\ExceptionsInterface;
 
 
-class InvalidDocumentException extends RuntimeException implements ExceptionsInterface
+class InvalidDocumentException extends RuntimeException
 {
     /**
      * @param string $document
@@ -16,13 +15,5 @@ class InvalidDocumentException extends RuntimeException implements ExceptionsInt
     public static function withDocument(string $document): self
     {
         return new self(sprintf('Invalid document: %s', $document));
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return 'Invalid document.';
     }
 }

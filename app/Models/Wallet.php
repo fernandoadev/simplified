@@ -29,13 +29,10 @@ class Wallet extends Model
      */
     protected $fillable = [
         'name',
-        'is_main_wallet',
         'balance',
     ];
 
-    /**
-     * @return BelongsTo
-     */
+    /** @return BelongsTo */
     public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);

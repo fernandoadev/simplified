@@ -2,10 +2,10 @@
 
 use App\Models\User;
 use App\Models\Wallet;
+use App\Exceptions\UserAlreadyHasWalletException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 uses(DatabaseMigrations::class);
-
 
 describe('test wallet CRUD', function () {
     it('Should create a wallet', function () {
@@ -54,7 +54,6 @@ describe('test wallet structure', function () {
     it('Should return the corrects fillable fields', function () {
         $expectedFillable = [
             'name',
-            'is_main_wallet',
             'balance'
         ];
 

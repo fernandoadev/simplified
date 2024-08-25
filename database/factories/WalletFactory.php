@@ -19,8 +19,7 @@ class WalletFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create()->id,
-            'name' => fake()->name(10),
-            'is_main_wallet' => 1
+            'name' => fake()->name(10)
         ];
     }
 }

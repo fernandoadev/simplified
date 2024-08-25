@@ -1,14 +1,12 @@
 <?php
 
-use App\Models\Role;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 uses(DatabaseMigrations::class);
 
-
-describe('test user CRUD', function () {
+describe('Test user CRUD', function () {
     it('Should create a user', function () {
         $user = User::factory()->create();
 
@@ -41,41 +39,27 @@ describe('test user CRUD', function () {
     });
 });
 
-describe('test user relationships', function () {
-    it('roles relationship', function () {
-        $user = User::factory()->create();
-        $role = Role::findByRole('customer');
-
-        $user->roles()->attach([$role->id]);
-
-        $userWithRoles = User::with('roles')->find($user->id);
-
-        expect($userWithRoles->roles->first()->role)->toBe('customer');
-    });
-
-    it('wallets relationship', function () {
+describe('Test user relationships', function () {
+    it('Wallet relationship', function () {
         $user = User::factory()->create();
 
         Wallet::factory()->create();
 
-        Wallet::factory()->state([
+        $wallet = Wallet::factory()->state([
             'user_id' => $user->id
         ])->create();
 
-        Wallet::factory()->state([
-            'user_id' => $user->id
-        ])->create();
+        $user->load('wallet');
 
-        $user->load('wallets');
-
-        expect($user->wallets->count())->toBe(2);
+        expect($user->wallet->id)->toBe($wallet->id);
     });
 });
 
-describe('test user structure', function () {
+describe('Test user structure', function () {
     it('Should return the corrects fillable fields', function () {
         $expectedFillable = [
             'name',
+            'type',
             'document',
             'email',
             'password'

@@ -15,8 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->string('name', 50)->unique();
-            $table->tinyInteger('is_main_wallet');
-            $table->double('balance', 15, 2)->default(0);
+            $table->integer('balance')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
