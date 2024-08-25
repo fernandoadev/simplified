@@ -1,0 +1,73 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "API documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/transfer": {
+            "post": {
+                "tags": [
+                    "Transfer"
+                ],
+                "summary": "Perform transfer between users",
+                "description": "Performs the transfer",
+                "operationId": "a768977dcdad59041e2c7fdd8259e553",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "value",
+                                    "payer",
+                                    "payee"
+                                ],
+                                "properties": {
+                                    "value": {
+                                        "description": "Amount to transfer",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.75
+                                    },
+                                    "payer": {
+                                        "description": "Payer ID",
+                                        "type": "string",
+                                        "example": "f30dab29-43aa-49b8-9bc5-d23108129166"
+                                    },
+                                    "payee": {
+                                        "description": "Payee ID",
+                                        "type": "string",
+                                        "example": "f0d8cb9f-5e5c-4c0c-b7e2-b6b954cfb406"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Transfer",
+            "description": "Transfer"
+        }
+    ]
+}

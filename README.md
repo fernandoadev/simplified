@@ -59,8 +59,18 @@ Para rodar os testes, acesse o container do app (1) em seguida rode o comando do
 2 - ./vendor/bin/pest
 ```
 
+Para gerar ou atualizar a documentação da API, acesse o container (1) em seguida rode o comando (2)
+
+```sh
+1 - docker-compose exec app bash
+2 - php artisan l5-swagger:generate
+```
+
 Acesse o projeto
 [http://localhost:8000](http://localhost:8000)
+
+Documentação da api
+[http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 
 OBS: Para testar o endpoint de transfer usar:
 

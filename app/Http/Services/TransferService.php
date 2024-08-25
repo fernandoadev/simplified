@@ -47,10 +47,10 @@ class TransferService
             return response()->api(200, 'Transfer has perform with success.');
         } catch (UserNotAllowedToPerformTransfer $e) {
             DB::rollBack();
-            return response()->api(400, $e->getMessage());
+            return response()->api(401, $e->getMessage());
         } catch (UserHasNotEnoughtBalanceException $e) {
             DB::rollBack();
-            return response()->api(400, $e->getMessage());
+            return response()->api(401, $e->getMessage());
         } catch (Throwable $e) {
             DB::rollBack();
             return response()->api(500, sprintf('An unexpected error occurred: %s', $e->getMessage()));
