@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Exceptions\NotifyClientException;
 use Illuminate\Http\Client\Response;
 
-class LogerClient
+class LoggerClient
 {
     private string $baseUrl;
 
