@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
 use App\Clients\AuthorizeClient;
+use App\Clients\LogerClient;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\AuthorizeClientException;
@@ -19,10 +20,12 @@ class TransferValidator
     private string $message;
     private ?array $data = null;
     private AuthorizeClient $authorizeClient;
+    private LogerClient $loger;
 
-    public function __construct(AuthorizeClient $authorizeClient)
+    public function __construct(AuthorizeClient $authorizeClient, LogerClient $loger)
     {
         $this->authorizeClient = $authorizeClient;
+        $this->loger = $loger;
     }
 
     /**
@@ -71,26 +74,31 @@ class TransferValidator
             $this->message = $e->getMessage();
             $this->data = $errors->all();
 
+            $this->loger->log($this->message);
             return false;
         } catch (AuthorizeClientException $e) {
             $this->code = 401;
             $this->message = $e->getMessage();
 
+            $this->loger->log($this->message);
             return false;
         } catch (UserNotFoundException $e) {
             $this->code = 404;
             $this->message = $e->getMessage();
 
+            $this->loger->log($this->message);
             return false;
         } catch (UserNotAllowedToPerformTransfer $e) {
             $this->code = 401;
             $this->message = $e->getMessage();
 
+            $this->loger->log($this->message);
             return false;
         } catch (UserHasNotEnoughtBalanceException $e) {
             $this->code = 401;
             $this->message = $e->getMessage();
 
+            $this->loger->log($this->message);
             return false;
         }
     }

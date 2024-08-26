@@ -1,10 +1,11 @@
 <?php
 
 use Mockery as M;
-use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use App\Clients\LogerClient;
 use Illuminate\Http\Request;
 use App\Clients\AuthorizeClient;
+use Illuminate\Support\Facades\Http;
 use App\Http\Validators\TransferValidator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -13,6 +14,11 @@ uses(DatabaseMigrations::class);
 
 describe('Should pass', function () {
     it('When are all clear', function () {
+        $mockLoger = M::mock(LogerClient::class);
+        $mockLoger->shouldNotReceive('log');
+        
+        assert($mockLoger instanceof LogerClient);
+
         Http::shouldReceive('withHeaders->get')
             ->once()
             ->andReturn(M::mock([
@@ -39,7 +45,7 @@ describe('Should pass', function () {
             'payee' => $userInto->id,
         ]);
 
-        $validator = new TransferValidator($client);
+        $validator = new TransferValidator($client, $mockLoger);
 
         $validated = $validator->validate($request);
 
@@ -49,6 +55,11 @@ describe('Should pass', function () {
 
 describe('Should NOT pass', function () {
     it('When authorize return false', function () {
+        $mockLoger = M::mock(LogerClient::class);
+        $mockLoger->shouldReceive('log')->once();
+        
+        assert($mockLoger instanceof LogerClient);
+
         Http::shouldReceive('withHeaders->get')
             ->once()
             ->andReturn(M::mock([
@@ -75,7 +86,7 @@ describe('Should NOT pass', function () {
             'payee' => $userInto->id,
         ]);
 
-        $validator = new TransferValidator($client);
+        $validator = new TransferValidator($client, $mockLoger);
 
         $validated = $validator->validate($request);
 
@@ -83,6 +94,11 @@ describe('Should NOT pass', function () {
     });
 
     it('When userfrom not found', function () {
+        $mockLoger = M::mock(LogerClient::class);
+        $mockLoger->shouldReceive('log')->once();
+        
+        assert($mockLoger instanceof LogerClient);
+
         Http::shouldReceive('withHeaders->get')
             ->once()
             ->andReturn(M::mock([
@@ -109,7 +125,7 @@ describe('Should NOT pass', function () {
             'payee' => $userInto->id,
         ]);
 
-        $validator = new TransferValidator($client);
+        $validator = new TransferValidator($client, $mockLoger);
 
         $validated = $validator->validate($request);
 
@@ -117,6 +133,11 @@ describe('Should NOT pass', function () {
     });
 
     it('When userinto not found', function () {
+        $mockLoger = M::mock(LogerClient::class);
+        $mockLoger->shouldReceive('log')->once();
+        
+        assert($mockLoger instanceof LogerClient);
+
         Http::shouldReceive('withHeaders->get')
             ->once()
             ->andReturn(M::mock([
@@ -143,7 +164,7 @@ describe('Should NOT pass', function () {
             'payee' => '2134',
         ]);
 
-        $validator = new TransferValidator($client);
+        $validator = new TransferValidator($client, $mockLoger);
 
         $validated = $validator->validate($request);
 
@@ -151,6 +172,11 @@ describe('Should NOT pass', function () {
     });
 
     it('When userfrom has no sufficient balance', function () {
+        $mockLoger = M::mock(LogerClient::class);
+        $mockLoger->shouldReceive('log')->once();
+        
+        assert($mockLoger instanceof LogerClient);
+
         Http::shouldReceive('withHeaders->get')
             ->once()
             ->andReturn(M::mock([
@@ -177,7 +203,7 @@ describe('Should NOT pass', function () {
             'payee' => $userInto->id,
         ]);
 
-        $validator = new TransferValidator($client);
+        $validator = new TransferValidator($client, $mockLoger);
 
         $validated = $validator->validate($request);
 
