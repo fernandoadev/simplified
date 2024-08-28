@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Clients\LoggerClient;
 use App\Clients\NotifyClient;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -9,7 +10,6 @@ use App\Exceptions\NotifyClientException;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Log;
 
 class SendExternalNotification implements ShouldQueue
 {
@@ -19,6 +19,7 @@ class SendExternalNotification implements ShouldQueue
     use SerializesModels;
 
     protected $client;
+    protected $loggerCliente;
 
     /** Maximum number of attempts.*/
     public $tries = 5;
@@ -29,9 +30,10 @@ class SendExternalNotification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(NotifyClient $notifyClient)
+    public function __construct(NotifyClient $notifyClient, LoggerClient $loggerCliente)
     {
         $this->client = $notifyClient;
+        $this->loggerCliente = $loggerCliente;
     }
 
     /**
@@ -42,7 +44,7 @@ class SendExternalNotification implements ShouldQueue
         try {
             $this->client->notify();
         } catch (NotifyClientException $e) {
-            Log::error(sprintf('Failed to SendExternalNotification: %s', $e->getMessage()));
+            $this->loggerCliente->log(sprintf('Failed to SendExternalNotification: %s', $e->getMessage()));
             $this->fail($e);
         }
     }

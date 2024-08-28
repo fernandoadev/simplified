@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Clients\LoggerClient;
 use App\Models\User;
 use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class TransferService
             $userInto->wallet->balance = $userInto->wallet->balance + UserHelper::floatToCents($request->value);
             $userInto->wallet->save();
 
-            SendExternalNotification::dispatch(new NotifyClient());
+            SendExternalNotification::dispatch(new NotifyClient(), new LoggerClient());
             DB::commit();
             return response()->api(200, 'Transfer has perform with success.');
         } catch (Throwable $e) {
